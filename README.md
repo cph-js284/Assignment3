@@ -126,7 +126,7 @@ db.TweetDocs.aggregate([
 {$limit:5}
 ],{ allowDiskUse: true })
 
-Mongo shell (negative positive):
+Mongo shell (positive tweets):
 db.TweetDocs.aggregate([
 {$group: {_id:"$UserName", pol:{$sum:"$Polarity"}, NoTweets: {$sum:1}}},
 {$sort: {"pol": 1}},
