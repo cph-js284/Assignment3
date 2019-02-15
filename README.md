@@ -35,7 +35,7 @@ db.TweetDocs.aggregate([
 
 C#:
 var res = _collection.AsQueryable()
-        .Where(x => x.Text.Contains("@"))
+        .Where(x => x.Text.Contains("@")) // <- there is an error here, I left it in to match the original code
         .GroupBy(u => u.UserName)
         .Select(usr => new{UserName = usr.Key, TweetCount = usr.Count()})
         .OrderByDescending(c => c.TweetCount)
@@ -63,7 +63,7 @@ db.TweetDocs.aggregate([
 {$project: {Name: {$arrayElemAt: ["$TextArr", 0]}}},
 {$group: {_id:"$Name", NoRefs:{$sum:1}}},
 {$sort: {"NoRefs": -1}},
-{$limit: 15}
+{$limit: 5}
 ])
 
 C#:
