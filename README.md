@@ -23,7 +23,8 @@ output:
 Question 2) Which Twitter users link the most to other Twitter users? (Provide the top ten.)
 
 Mongo shell:
-db.TweetDocs.aggregate([
+
+```db.TweetDocs.aggregate([
 {$match : {Text : {$regex: '@\\w+'}}},
 {$project: {usr: "$UserName"}},
 {$group: {_id: "$usr", NoL: {$sum:1}}},
@@ -50,3 +51,5 @@ User : mcraddictal references other users 217 times
 User : Karen230683 references other users 216 times
 User : keza34 references other users 211 times
 User : TraceyHewins references other users 202 times
+```
+---------------------------------------------------------------------------------------------------------------------------------
