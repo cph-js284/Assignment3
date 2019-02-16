@@ -164,9 +164,46 @@ keza34 - - 844
 
 *Going through the table provided by Kasper, I have decided to go through the answers(discussion) on a column by column basis*
 
-*1) Atomicity for Array of Ancestors*
+*1) Atomicity for Array of Ancestors:*
 It seems to me that since atomicity is not a guarantee
 on anything else than a single document at a time, modifying data arywhere else but the leafs of the data structure would pressent a potential risk
 And should involve some sort or safety-mechanism.
+
+*2) Atomicity for nested sets same answer as above:*
+It seems to me that since atomicity is not a garantee
+on anything else than a single document at a time, modifying data arywhere else but the leafs of the data structure would pressent a potential risk
+And should involve some sort or safety-mechanism.
+
+*3) Sharding for Materialized paths:*
+I dont see any problem here, if the id of the individual document is choosen with consideration, doing a find() operation should not present any problems
+Likewise, adding or modifying data should work the same way as with an un-sharded collection.
+
+*4) Sharding for nested paths:*
+I can see potential problems in sharding a collection with this model, given that the roundtrip it does visits all the documents in the entire collections, 
+this would mean alot of added overhead to adding and modifying the datastructure.
+
+*5)Indexes for Array of ancestors:*
+Besides the obvious capacity considerations (adding an index increases the datasets size). It seems to me that whether or not there is a benifit here
+comes down to the ratio of read-write operations, updating this data structure anywhere else than the leafs seems to involve alot of 
+write operations, which inturn means alot of indexes has to be updated which would slow down the execution
+
+*6)Indexes for Nested sets:*
+Again, for nested sets there are capacity considerations. I believe the nested sets data model would benifit 
+from having an index applied due to the fact that it performs a read on each node twice (roundtrip). Using an index in the first is
+exactly to speed up read operations.
+
+*7) Large number of collections for array of ancestors:*
+Besides the limits on the actual number of collections that exsist in MongoDb,
+and aslong as the cross-collection-references on each document are kept to a minimum or are none-exsistent, I dont see any problem here
+
+*8) large number of collections for materialized paths:*
+Besides the limits on the actual number of collections that exsist in MongoDb,
+and aslong as the cross-collection-references on each document are kept to a minimum or are none-exsistent, I dont see any problem here
+
+*9) Collection contains large number of small documents for materialized paths:*
+One problem here would be as the size of the collection increases so does the path-length (string holding the path to the node), 
+this would inturn increase the time it takes to find a given node in the tree(due to linear string-traversal of regex).
+ Meaning all operations on a given node would be
+slowed down as the size of the collection increases.
 
 
