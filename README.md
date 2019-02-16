@@ -161,3 +161,12 @@ keza34 - - 844
 ```
 -------------------------------------------------------------------------------------------------------------------------------
 # 2. Modeling
+
+*Going through the table provided by Kasper, I have decided to go through the answers(discussion) on a column by column basis*
+
+*1) Atomicity for Array of Ancestors*
+It seems to me that since atomicity is not a guarantee
+on anything else than a single document at a time, modifying data arywhere else but the leafs of the data structure would pressent a potential risk
+And should involve some sort or safety-mechanism.
+
+
